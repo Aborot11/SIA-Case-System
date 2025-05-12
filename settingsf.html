@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PSU Faculty Portal - Settings</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background: #f0f4f8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .main-container {
+      min-height: 100vh;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(135deg, #0db932 0%, #0d2339 100%);
+      color: white;
+      padding: 20px 0;
+      flex-shrink: 0;
+      box-shadow: 3px 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-logo {
+      text-align: center;
+      padding: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      margin-bottom: 15px;
+    }
+
+    .sidebar-logo img {
+      max-width: 70%;
+      height: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    .sidebar-logo h6 {
+      margin-top: 8px;
+      font-weight: 600;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar-menu li {
+      margin-bottom: 2px;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      padding: 12px 20px;
+      transition: all 0.3s;
+    }
+
+    .sidebar-menu a:hover,
+    .sidebar-menu a.active {
+      background-color: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    .sidebar-menu a i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .logout-btn {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 30px;
+      margin-top: 25px;
+      transition: all 0.3s;
+    }
+
+    .logout-btn:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-logo">
+        <img src="https://via.placeholder.com/80x80?text=PSU" alt="PSU Logo" class="img-fluid mb-2"/>
+        <h6>Palawan State University</h6>
+        <small>College of Sciences</small>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="dashboard_faculty.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Class Management</a></li>
+        <li><a href="#"><i class="fas fa-graduation-cap"></i> Grade Submission</a></li>
+        <li><a href="#"><i class="fas fa-book"></i> Course Materials</a></li>
+        <li><a href="#"><i class="fas fa-chart-line"></i> Student Performance</a></li>
+        <li><a href="#"><i class="fas fa-users"></i> Student List</a></li>
+        <li><a href="#"><i class="fas fa-calendar-alt"></i> Class Schedule</a></li>
+        <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
+        <li><a href="settingsf.html" class="active"><i class="fas fa-cog"></i> Settings</a></li>
+      </ul>
+      <div class="text-center">
+        <a href="index.html" class="btn logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Sign Out
+        </a>
+      </div>
+    </div>
+    <!-- Content Area -->
+    <div class="content-area">
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
+        <div class="user-greeting">
+          <h4>Account Settings</h4>
+          <p>Faculty ID: 20150082 | Prof. Maria Santos</p>
+        </div>
+        <div class="date-time">
+          <p class="mb-0"><i class="far fa-calendar-alt"></i> <span id="currentDate"></span></p>
+        </div>
+      </div>
+
+      <!-- Settings Content -->
+      <div class="container-fluid p-0">
+        <div class="row g-4">
+          <!-- Profile Settings -->
+          <div class="col-md-6">
+            <div class="card p-4">
+              <div class="card-header mb-3 bg-white border-0">
+                <i class="fas fa-user-circle me-2"></i> Profile Settings
+              </div>
+              <div class="profile-pic-container mx-auto mb-3" style="width: 150px; height: 150px; position: relative;">
+                <img src="https://via.placeholder.com/150x150" class="profile-pic rounded-circle border border-success" style="width: 100%; height: 100%; object-fit: cover;">
+                <div class="profile-pic-edit position-absolute bottom-0 end-0 bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; cursor: pointer;">
+                  <i class="fas fa-camera"></i>
+                </div>
+              </div>
+              <form>
+                <div class="mb-3">
+                  <label for="firstName" class="form-label">First Name</label>
+                  <input type="text" class="form-control" id="firstName" value="Maria">
+                </div>
+                <div class="mb-3">
+                  <label for="lastName" class="form-label">Last Name</label>
+                  <input type="text" class="form-control" id="lastName" value="Santos">
+                </div>
+                <div class="mb-3">
+                  <label for="emailAddress" class="form-label">Email Address</label>
+                  <input type="email" class="form-control" id="emailAddress" value="maria.santos@psu.edu.ph">
+                </div>
+                <div class="mb-3">
+                  <label for="phoneNumber" class="form-label">Phone Number</label>
+                  <input type="tel" class="form-control" id="phoneNumber" value="+63 912 345 6789">
+                </div>
+                <div class="mb-3">
+                  <label for="department" class="form-label">Department</label>
+                  <select class="form-select" id="department">
+                    <option selected>Department of Computer Science</option>
+                    <option>Department of Mathematics</option>
+                    <option>Department of Physics</option>
+                    <option>Department of Chemistry</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- Account Security -->
+          <div class="col-md-6">
+            <div class="card p-4">
+              <div class="card-header mb-3 bg-white border-0">
+                <i class="fas fa-user-shield me-2"></i> Account Security
+              </div>
+              <form>
+                <div class="mb-3">
+                  <label for="currentPassword" class="form-label">Current Password</label>
+                  <input type="password" class="form-control" id="currentPassword">
+                </div>
+                <div class="mb-3">
+                  <label for="newPassword" class="form-label">New Password</label>
+                  <input type="password" class="form-control" id="newPassword">
+                </div>
+                <div class="mb-3">
+                  <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                  <input type="password" class="form-control" id="confirmPassword">
+                </div>
+                <div class="mb-3">
+                  <label for="securityQuestion" class="form-label">Security Question</label>
+                  <select class="form-select" id="securityQuestion">
+                    <option selected>What was your childhood nickname?</option>
+                    <option>What is the name of your first pet?</option>
+                    <option>What is your mother's maiden name?</option>
+                    <option>In what city were you born?</option>
+                    <option>What is the name of your elementary school?</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="securityAnswer" class="form-label">Security Answer</label>
+                  <input type="text" class="form-control" id="securityAnswer">
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- Notification Settings -->
+          <div class="col-md-12">
+            <div class="card p-4">
+              <div class="card-header mb-3 bg-white border-0">
+                <i class="fas fa-bell me-2"></i> Notification Settings
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="notifGrades" checked>
+                    <label class="form-check-label" for="notifGrades">Grade Submission Reminders</label>
+                  </div>
+                  <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="notifMeetings" checked>
+                    <label class="form-check-label" for="notifMeetings">Meeting Reminders</label>
+                  </div>
+                  <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="notifMessages" checked>
+                    <label class="form-check-label" for="notifMessages">Student Messages</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="notifDept" checked>
+                    <label class="form-check-label" for="notifDept">Department Announcements</label>
+                  </div>
+                  <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="notifSystem">
+                    <label class="form-check-label" for="notifSystem">System Updates</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Appearance -->
+          <div class="col-md-6">
+            <div class="card p-4">
+              <div class="card-header mb-3 bg-white border-0">
+                <i class="fas fa-paint-brush me-2"></i> Appearance
+              </div>
+              <div class="mb-3">
+                <label for="fontSize" class="form-label">Font Size</label>
+                <select class="form-select" id="fontSize">
+                  <option>Small</option>
+                  <option selected>Medium (Default)</option>
+                  <option>Large</option>
+                  <option>Extra Large</option>
+                </select>
+              </div>
+              <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" id="compactView">
+                <label class="form-check-label" for="compactView">Use Compact View</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Privacy -->
+          <div class="col-md-6">
+            <div class="card p-4">
+              <div class="card-header mb-3 bg-white border-0">
+                <i class="fas fa-user-lock me-2"></i> Privacy Settings
+              </div>
+              <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" id="showOnlineStatus" checked>
+                <label class="form-check-label" for="showOnlineStatus">Show Online Status</label>
+              </div>
+              <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" id="trackLastSeen">
+                <label class="form-check-label" for="trackLastSeen">Track Last Seen</label>
+              </div>
+              <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" id="allowTagging" checked>
+                <label class="form-check-label" for="allowTagging">Allow Tagging</label>
+              </div>
+            </div>
+          </div>
+          <!-- Save Button -->
+          <div class="col-12 text-center">
+            <button class="btn btn-success px-4 py-2 mt-3 rounded-pill">
+              <i class="fas fa-save me-2"></i> Save All Changes
+            </button>
+          </div>
+        </div> <!-- End row -->
+      </div> <!-- End container -->
+    </div> <!-- End content-area -->
+  </div> <!-- End main-container -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const today = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('currentDate').textContent = today.toLocaleDateString('en-US', options);
+
+    // Profile pic click
+    const picEdit = document.querySelector('.profile-pic-edit');
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.style.display = 'none';
+    document.body.appendChild(fileInput);
+
+    picEdit.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          document.querySelector('.profile-pic').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>

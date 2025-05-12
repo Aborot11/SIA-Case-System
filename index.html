@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PSU Student Portal - Login</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background: #f5f5f5;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .login-container {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url('https://via.placeholder.com/1920x1080?text=PSU+Campus') no-repeat center center;
+      background-size: cover;
+      position: relative;
+    }
+
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+    }
+
+    .login-form {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      z-index: 1;
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .form-label {
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-form">
+      <div class="text-center mb-4">
+        <img src="https://via.placeholder.com/100x100?text=PSU" alt="PSU Logo" class="mb-2"/>
+        <h4 class="text-primary">Palawan State University</h4>
+        <h6>College of Sciences Student Portal</h6>
+        <p class="text-muted">Sign in to access your academic portal</p>
+      </div>
+
+      <div class="mb-3">
+        <label for="roleSelect" class="form-label">Select Role</label>
+        <select id="roleSelect" class="form-select">
+          <option value="student">Student</option>
+          <option value="faculty">Faculty</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
+      <form id="loginForm">
+        <div class="mb-3">
+          <label for="idField" id="idLabel" class="form-label">Student ID</label>
+          <input type="text" class="form-control" id="idField" placeholder="e.g. 202080452" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" required />
+        </div>
+
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="rememberMe" />
+          <label class="form-check-label" for="rememberMe">Remember me</label>
+        </div>
+
+        <button type="button" class="btn btn-primary w-100" onclick="login()">Sign In</button>
+
+        <div class="text-center mt-3">
+          <a href="#" id="forgotPasswordLink" class="text-decoration-none">Forgot password?</a>
+        </div>
+      </form>
+
+      <div class="mt-4 text-center">
+        <div class="alert alert-info p-2">
+          <small>For technical support, please contact:<br />support@psu.edu.ph</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const roleSelect = document.getElementById('roleSelect');
+    const idLabel = document.getElementById('idLabel');
+    const idField = document.getElementById('idField');
+
+    roleSelect.addEventListener('change', () => {
+      const role = roleSelect.value;
+
+      if (role === 'student') {
+        idLabel.textContent = 'Student ID';
+        idField.placeholder = 'e.g. 202080452';
+      } else if (role === 'faculty') {
+        idLabel.textContent = 'Faculty Email';
+        idField.placeholder = 'e.g. professor@psu.edu.ph';
+      } else if (role === 'admin') {
+        idLabel.textContent = 'Access Key';
+        idField.placeholder = 'Enter access key';
+      }
+    });
+
+    function login() {
+      const role = roleSelect.value;
+      alert(`Logging in as ${role.toUpperCase()}... (mock login)`);
+      // Redirect to dummy dashboards
+      if (role === 'student') {
+        window.location.href = 'dashboard_student.html';
+      } else if (role === 'faculty') {
+        window.location.href = 'dashboard_faculty.html';
+      } else if (role === 'admin') {
+        window.location.href = 'dashboard_admin.html';
+      }
+    }
+
+    // Forgot Password Link Logic
+    document.getElementById('forgotPasswordLink').addEventListener('click', function (e) {
+      e.preventDefault();
+      const role = roleSelect.value;
+
+      if (role === 'student') {
+        window.location.href = 'forgot_password_student.html';
+      } else if (role === 'faculty') {
+        window.location.href = 'forgot_password_faculty.html';
+      } else if (role === 'admin') {
+        window.location.href = 'forgot_password_admin.html';
+      }
+    });
+  </script>
+</body>
+</html> 

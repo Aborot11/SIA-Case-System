@@ -1,0 +1,2420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PSU Student Portal - Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    /* Custom CSS with personalized style */
+    body {
+      background: #f0f4f8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .main-container {
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Sidebar Styles - Updated with gradient and rounded corners */
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(135deg, #0db932 0%, #0d2339 100%);
+      color: white;
+      padding: 20px 0;
+      flex-shrink: 0;
+      box-shadow: 3px 0 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 10;
+    }
+
+    .sidebar-logo {
+      text-align: center;
+      padding: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      margin-bottom: 15px;
+    }
+
+    .sidebar-logo h6 {
+      margin-top: 8px;
+      margin-bottom: 0;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .sidebar-logo small {
+      opacity: 0.8;
+      font-style: italic;
+    }
+
+    .sidebar-logo img {
+      max-width: 70%;
+      height: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      transition: transform 0.3s;
+    }
+
+    .sidebar-logo img:hover {
+      transform: scale(1.05);
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar-menu li {
+      margin-bottom: 2px;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 0;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar-menu a:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      background-color: #0db932;
+      transform: scaleY(0);
+      transition: transform 0.2s, width 0.4s cubic-bezier(1,0,0,1) 0.2s;
+      z-index: -1;
+    }
+
+    .sidebar-menu a:hover:before,
+    .sidebar-menu a.active:before {
+      transform: scaleY(1);
+      width: 100%;
+    }
+
+    .sidebar-menu a:hover, 
+    .sidebar-menu a.active {
+      color: white;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    .sidebar-menu a i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .sidebar-menu a:hover i {
+      transform: translateX(3px);
+    }
+
+    /* Content Area Styles */
+    .content-area {
+      flex-grow: 1;
+      padding: 25px;
+      overflow-y: auto;
+      background-color: #f0f4f8;
+      position: relative;
+    }
+
+    .dashboard-header {
+      background-color: white;
+      padding: 20px 25px;
+      border-radius: 15px;
+      margin-bottom: 25px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 5px solid #0db932;
+    }
+
+    .user-greeting h4 {
+      margin-bottom: 5px;
+      color: #2c3e50;
+      font-weight: 600;
+    }
+
+    .user-greeting p {
+      color: #7f8c8d;
+      margin: 0;
+    }
+
+    .date-time p {
+      color: #0db932;
+      font-weight: 500;
+    }
+
+    .card {
+      height: 100%;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      border: none;
+      border-radius: 15px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .card-header {
+      background: linear-gradient(to right, #f9f9f9, #f0f0f0);
+      border-bottom: 1px solid #e9ecef;
+      font-weight: 600;
+      color: #2c3e50;
+      padding: 15px 20px;
+    }
+
+    .progress {
+      height: 12px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      background-color: #e9ecef;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background: linear-gradient(to right, #3498db, #2980b9);
+      border-radius: 10px;
+    }
+
+    /* CONNECTING PART 1 - END HERE */
+
+/* CONNECTING PART 2 - START HERE */
+    
+    .schedule-item {
+      border-left: 3px solid #3498db;
+      padding-left: 15px;
+      margin-bottom: 18px;
+      position: relative;
+      transition: all 0.3s;
+      padding-bottom: 5px;
+    }
+
+    .schedule-item:hover {
+      background-color: #f8f9fa;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border-left: 5px solid #2980b9;
+    }
+
+    .schedule-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .schedule-item h6 {
+      margin-bottom: 5px;
+      color: #2c3e50;
+      font-weight: 600;
+    }
+
+    .schedule-item p {
+      margin-bottom: 0;
+      font-size: 14px;
+      color: #7f8c8d;
+    }
+
+    .status-badge {
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .status-active {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .status-pending {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .table th {
+      font-weight: 600;
+      color: #2c3e50;
+      border-top: none;
+      border-bottom: 2px solid #e9ecef;
+    }
+
+    .table td {
+      vertical-align: middle;
+    }
+
+    /* New styles for curriculum progress */
+    .curriculum-progress {
+      margin-top: 20px;
+    }
+
+    .year-tab {
+      cursor: pointer;
+      padding: 10px 15px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #2c3e50;
+      transition: all 0.3s;
+      border-left: 3px solid #e9ecef;
+    }
+
+    .year-tab:hover {
+      background-color: #e9ecef;
+      border-left: 3px solid #3498db;
+    }
+
+    .year-tab.active {
+      background-color: #e9ecef;
+      border-left: 3px solid #0db932;
+    }
+
+    .semester-header {
+      background-color: #f0f4f8;
+      padding: 10px 15px;
+      font-weight: 600;
+      border-radius: 5px;
+      margin: 10px 0;
+      color: #2c3e50;
+    }
+
+    .course-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 10px;
+      border-bottom: 1px solid #f0f0f0;
+      transition: all 0.3s;
+    }
+
+    .course-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .course-status {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-right: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+    }
+
+    .status-completed {
+      background-color: #28a745;
+    }
+
+    .status-ongoing {
+      background-color: #17a2b8;
+    }
+
+    .status-incomplete {
+      background-color: #dc3545;
+    }
+
+    .status-pending {
+      background-color: #ffc107;
+    }
+
+    .course-info {
+      flex-grow: 1;
+    }
+
+    .course-code {
+      font-weight: 500;
+      color: #2c3e50;
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    .course-title {
+      color: #7f8c8d;
+      font-size: 13px;
+      margin-bottom: 0;
+    }
+
+    .course-units {
+      font-size: 13px;
+      color: #2c3e50;
+      text-align: center;
+      min-width: 50px;
+    }
+
+    .course-grade {
+      font-weight: 600;
+      text-align: center;
+      min-width: 50px;
+      font-size: 14px;
+    }
+
+    .grade-good {
+      color: #28a745;
+    }
+
+    .grade-average {
+      color: #17a2b8;
+    }
+
+    .grade-warning {
+      color: #ffc107;
+    }
+
+    .grade-failing {
+      color: #dc3545;
+    }
+
+    /* CONNECTING PART 2 - END HERE */
+
+/* CONNECTING PART 3 - START HERE */
+    
+    .payment-badge {
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .paid {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .unpaid {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .logout-btn {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 30px;
+      margin-top: 25px;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logout-btn:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .logout-btn i {
+      margin-right: 5px;
+    }
+
+    /* Form Management Styles */
+    .form-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      border-bottom: 1px solid #f0f0f0;
+      transition: all 0.3s;
+      border-radius: 8px;
+    }
+
+    .form-item:hover {
+      background-color: #f8f9fa;
+      transform: translateX(5px);
+    }
+
+    .form-item:last-child {
+      border-bottom: none;
+    }
+
+    .form-icon {
+      font-size: 24px;
+      color: #3498db;
+      margin-right: 15px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(52, 152, 219, 0.1);
+      border-radius: 10px;
+      transition: all 0.3s;
+    }
+
+    .form-item:hover .form-icon {
+      background-color: rgba(52, 152, 219, 0.2);
+      transform: scale(1.1);
+    }
+
+    .form-details {
+      flex-grow: 1;
+    }
+
+    .form-details h6 {
+      margin-bottom: 2px;
+      color: #2c3e50;
+      font-weight: 600;
+    }
+
+    .form-details p {
+      margin-bottom: 0;
+      font-size: 12px;
+      color: #7f8c8d;
+    }
+
+    .form-download {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 30px;
+      font-size: 12px;
+      transition: all 0.3s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-download:hover {
+      background: linear-gradient(135deg, #0db932, #0d2339);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .forms-modal .modal-header {
+      background: linear-gradient(135deg, #0db932, #0d2339);
+      color: white;
+      border-bottom: none;
+      padding: 15px 20px;
+    }
+
+    .forms-modal .modal-header .btn-close {
+      color: white;
+      opacity: 0.8;
+    }
+
+    .forms-modal .modal-content {
+      border-radius: 15px;
+      overflow: hidden;
+      border: none;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-tab-content {
+      height: 250px;
+      overflow-y: auto;
+      padding: 10px 5px;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a1a1a1;
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      border-bottom: 1px solid #dee2e6;
+      margin-bottom: 15px;
+    }
+
+    .nav-tabs .nav-link {
+      color: #7f8c8d;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 10px 15px;
+      border-radius: 0;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+
+    .nav-tabs .nav-link:hover {
+      border-color: transparent;
+      color: #3498db;
+    }
+
+    .nav-tabs .nav-link.active {
+      color: #3498db;
+      background-color: transparent;
+      border-bottom: 2px solid #3498db;
+    }
+
+    /* CONNECTING PART 3 - END HERE */
+
+/* CONNECTING PART 4 - START HERE */
+    
+    /* Alerts for Notifications */
+    .alert {
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 15px;
+    }
+
+    .alert-info {
+      background-color: #e1f0fa;
+      color: #0c5460;
+      border-left: 4px solid #17a2b8;
+    }
+
+    .alert-warning {
+      background-color: #fff8e1;
+      color: #856404;
+      border-left: 4px solid #ffc107;
+    }
+
+    .alert-success {
+      background-color: #e8f5e9;
+      color: #155724;
+      border-left: 4px solid #28a745;
+    }
+
+    .alert i {
+      opacity: 0.8;
+    }
+
+    /* Buttons */
+    .btn-sm {
+      border-radius: 30px;
+      padding: 5px 15px;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .btn-outline-primary {
+      color: #3498db;
+      border-color: #3498db;
+    }
+
+    .btn-outline-primary:hover {
+      background-color: #3498db;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      border: none;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #2980b9, #1a5276);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-secondary {
+      background-color: #95a5a6;
+      border: none;
+    }
+
+    .btn-secondary:hover {
+      background-color: #7f8c8d;
+    }
+
+    /* Added animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .row > div {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .row > div:nth-child(1) { animation-delay: 0.1s; }
+    .row > div:nth-child(2) { animation-delay: 0.2s; }
+    .row > div:nth-child(3) { animation-delay: 0.3s; }
+    .row > div:nth-child(4) { animation-delay: 0.4s; }
+    .row > div:nth-child(5) { animation-delay: 0.5s; }
+    
+    /* Curriculum Detail Modal */
+    .curriculum-modal .modal-content {
+      border-radius: 15px;
+      border: none;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .curriculum-modal .modal-header {
+      background: linear-gradient(135deg, #0db932, #0d2339);
+      color: white;
+      border-bottom: none;
+      padding: 15px 20px;
+    }
+    
+    .curriculum-modal .modal-body {
+      padding: 20px;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+    
+    .curriculum-year-title {
+      background-color: #e9ecef;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      color: #2c3e50;
+      font-weight: 600;
+    }
+    
+    .curriculum-semester {
+      margin-bottom: 20px;
+    }
+    
+    .curriculum-semester-title {
+      background-color: #f8f9fa;
+      padding: 8px 15px;
+      border-left: 3px solid #0db932;
+      margin-bottom: 10px;
+      color: #2c3e50;
+      font-weight: 500;
+    }
+
+/* Prospectus Table Styles */
+.prospectus-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.prospectus-table th,
+.prospectus-table td {
+  padding: 8px 12px;
+  text-align: left;
+  border: 1px solid #e9ecef;
+}
+
+.prospectus-table th {
+  background: linear-gradient(to right, #f0f4f8, #e9ecef);
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.prospectus-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.prospectus-table tr:hover {
+  background-color: #e9ecef;
+}
+
+.semester-header {
+  background: linear-gradient(to right, #0db932, #0d8039);
+  color: white;
+  padding: 8px 15px;
+  font-weight: 600;
+  border-radius: 5px 5px 0 0;
+  margin-bottom: 0;
+}
+
+.year-header {
+  background: linear-gradient(to right, #0d2339, #0d4b39);
+  color: white;
+  padding: 10px 15px;
+  font-weight: 700;
+  border-radius: 5px 5px 0 0;
+  margin: 30px 0 0 0;
+}
+
+.grade-cell {
+  font-weight: 600;
+}
+
+.grade-high {
+  color: #28a745;
+}
+
+.grade-medium {
+  color: #17a2b8;
+}
+
+.grade-low {
+  color: #ffc107;
+}
+
+.grade-fail {
+  color: #dc3545;
+}
+
+.subject-completed {
+  background-color: rgba(40, 167, 69, 0.1);
+}
+
+.subject-ongoing {
+  background-color: rgba(23, 162, 184, 0.1);
+}
+
+.semester-summary {
+  background-color: #f0f4f8;
+  padding: 10px 15px;
+  border-radius: 0 0 5px 5px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+}
+
+.curriculum-tab-content {
+  padding: 20px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.nav-pills .nav-link {
+  color: #2c3e50;
+  background-color: #f8f9fa;
+  margin-right: 5px;
+  border-radius: 30px;
+  padding: 5px 15px;
+  transition: all 0.3s;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #0db932;
+  color: white;
+}
+
+.nav-pills .nav-link:hover:not(.active) {
+  background-color: #e9ecef;
+}
+
+/* Override Bootstrap's .bg-primary with custom gradient */
+.bg-primary {
+  background: linear-gradient(135deg, #0db932, #0d2339) !important;
+  color: white !important;
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-logo">
+        <img src="images-removebg-preview.png" alt="CS Logo" class="img-fluid mb-2"/>
+        <h6>Palawan State University</h6>
+        <small>College of Sciences</small>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li><a href="#" onclick="openProgressModal()"><i class="fas fa-book"></i> Academic Progress</a></li>
+        <li><a href="#" onclick="openScheduleModal()"><i class="fas fa-calendar"></i> Course Schedule</a></li>
+        <li><a href="#"><i class="fas fa-user-graduate"></i> Enrollment Status</a></li>
+        <li><a href="#"><i class="fas fa-hand-holding-usd"></i> Financial Aid Info</a></li>
+        <li><a href="#" onclick="openGradesModal()"><i class="fas fa-file-alt"></i> Grades</a></li>
+
+        <li><a href="#" data-bs-toggle="modal" data-bs-target="#formsModal"><i class="fas fa-file-pdf"></i> Form Management</a></li>
+        <li><a href="#"><i class="fas fa-envelope"></i> Messages</a></li>
+        <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+      </ul>
+      <div class="text-center">
+        <a href="index.html" class="btn logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Sign Out
+        </a>
+      </div>
+    </div>
+
+    <!-- CONNECTING PART 4 - END HERE -->
+
+<!-- CONNECTING PART 5 - START HERE -->
+
+    <!-- Content Area -->
+    <div class="content-area">
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
+        <div class="user-greeting">
+          <h4>Welcome, Ian Jan Julito Aborot</h4>
+          <p>Student ID: 202080452 | BS Information Technology - 2nd Year</p>
+        </div>
+        <div class="date-time">
+          <p class="mb-0"><i class="far fa-calendar-alt"></i> <span id="currentDate">May 08, 2025</span></p>
+        </div>
+      </div>
+
+      <!-- Dashboard Content -->
+      <div class="container-fluid p-0">
+        <div class="row g-4">
+          <!-- Academic Progress Card -->
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <i class="fas fa-book me-2"></i> Academic Progress
+              </div>
+              <div class="card-body">
+                <h6>Overall Progress</h6>
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" style="width: 68%;" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100">68%</div>
+                </div>
+                <div class="d-flex justify-content-between mt-3">
+                  <div>
+                    <p class="mb-1 small">Major Subjects</p>
+                    <div class="progress" style="width: 150px">
+                      <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="mb-1 small">Minor Subjects</p>
+                    <div class="progress" style="width: 150px">
+                      <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="row mt-3">
+                  <div class="col-6">
+                    <div class="text-center">
+                      <h3>3.5</h3>
+                      <p class="small mb-0">Current GPA</p>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="text-center">
+                      <h3>89</h3>
+                      <p class="small mb-0">Units Completed</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Curriculum Progress Section -->
+                <div class="curriculum-progress mt-4">
+                  <h6 class="mb-3">Curriculum Progress</h6>
+                  <div class="year-tab active" data-year="1">First Year <span class="float-end"><i class="fas fa-check-circle text-success"></i></span></div>
+                  <div class="year-tab" data-year="2">Second Year <span class="float-end"><i class="fas fa-spinner text-primary"></i></span></div>
+                  <div class="year-tab" data-year="3">Third Year <span class="float-end"><i class="far fa-circle text-secondary"></i></span></div>
+                  <div class="year-tab" data-year="4">Fourth Year <span class="float-end"><i class="far fa-circle text-secondary"></i></span></div>
+                  
+                  <div class="mt-3 text-center">
+                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#curriculumModal">
+                      <i class="fas fa-list-alt me-1"></i> View Full Curriculum
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONNECTING PART 5 - END HERE -->
+
+<!-- CONNECTING PART 6 - START HERE -->
+        <!-- Course Schedule Card -->
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <i class="fas fa-calendar me-2"></i> Course Schedule (Today)
+              </div>
+              <div class="card-body">
+                <div class="schedule-item">
+                  <h6>IT5/L: Network Technologies 1</h6>
+                  <p><i class="far fa-clock me-1"></i> 8:00 AM - 9:30 AM</p>
+                  <p><i class="fas fa-map-marker-alt me-1"></i> NIT 3 Room</p>
+                </div>
+                <div class="schedule-item">
+                  <h6>IT6/L: Integrative Programming and Technologies 1</h6>
+                  <p><i class="far fa-clock me-1"></i> 10:00 AM - 11:30 AM</p>
+                  <p><i class="fas fa-map-marker-alt me-1"></i> CL3</p>
+                </div>
+                <div class="schedule-item">
+                  <h6>IT 7/L: System Integration Architecture 1</h6>
+                  <p><i class="far fa-clock me-1"></i> 1:00 PM - 2:30 PM</p>
+                  <p><i class="fas fa-map-marker-alt me-1"></i> Computer Lab 1</p>
+                </div>
+                <div class="text-center mt-3">
+                  <a href="#" class="btn btn-sm btn-outline-primary">View Full Schedule</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Enrollment Status Card -->
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <i class="fas fa-user-graduate me-2"></i> Enrollment Status
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-bold">Current Term:</span>
+                    <span>2nd Semester, AY 2024-2025</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-bold">Status:</span>
+                    <span class="status-badge status-active">Active</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-bold">Units Enrolled:</span>
+                    <span>21</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="fw-bold">Registration:</span>
+                    <span class="status-badge status-active">Complete</span>
+                  </div>
+                </div>
+                <hr>
+                <h6 class="mt-3">Pre-Enrollment Status</h6>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span>Next Term:</span>
+                  <span>1st Semester, AY 2025-2026</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span>Status:</span>
+                  <span class="status-badge status-pending">Pending</span>
+                </div>
+                <div class="text-center mt-3">
+                  <a href="#" class="btn btn-sm btn-primary">Start Pre-Enrollment</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Info Card -->
+         <!-- Financial Aid Info Card -->
+<div class="col-md-6">
+  <div class="card">
+    <div class="card-header">
+      <i class="fas fa-hand-holding-usd me-2"></i> Financial Aid & Subsidy Information
+    </div>
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          RA 10931 Coverage
+          <span class="badge bg-success rounded-pill">Active (Until AY 2025-2026)</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          TES Grant Status
+          <span class="badge bg-info text-dark rounded-pill">Approved</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Latest TES Disbursement
+          <span class="badge bg-primary rounded-pill">₱7,500 - Mar 2025</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Allowance Balance
+          <span class="badge bg-warning text-dark rounded-pill">₱2,000 Remaining</span>
+        </li>
+      </ul>
+      <div class="text-center mt-3">
+        <a href="#" class="btn btn-sm btn-outline-primary">View Grant History</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+          <!-- Notifications Card -->
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <i class="fas fa-bell me-2"></i> Latest Notifications
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="alert alert-info d-flex align-items-center" role="alert">
+                      <i class="fas fa-info-circle me-2 fs-4"></i>
+                      <div>
+                        <strong>Pre-enrollment for next semester is now open!</strong> Please complete your pre-enrollment by May 30, 2025.
+                      </div>
+                    </div>
+                    <div class="alert alert-warning d-flex align-items-center" role="alert">
+                      <i class="fas fa-exclamation-triangle me-2 fs-4"></i>
+                      <div>
+                        <strong>Reminder:</strong> Final tuition payment is due on April 15, 2025. Please settle your remaining balance to avoid late payment fees.
+                      </div>
+                    </div>
+                    <div class="alert alert-success d-flex align-items-center" role="alert">
+                      <i class="fas fa-file-pdf me-2 fs-4"></i>
+                      <div>
+                        <strong>New forms available!</strong> Updated academic forms for SY 2024-2025 are now available. Access them through the <a href="#" data-bs-toggle="modal" data-bs-target="#formsModal">Form Download Center</a> in the sidebar menu.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Forms Modal -->
+  <div class="modal fade forms-modal" id="formsModal" tabindex="-1" aria-labelledby="formsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formsModalLabel"><i class="fas fa-file-pdf me-2"></i> Form Download Center</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" id="formTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="adding-tab" data-bs-toggle="tab" data-bs-target="#adding" type="button" role="tab" aria-controls="adding" aria-selected="true">Adding Form</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="completion-tab" data-bs-toggle="tab" data-bs-target="#completion" type="button" role="tab" aria-controls="completion" aria-selected="false">Completion Form</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="dropping-tab" data-bs-toggle="tab" data-bs-target="#dropping" type="button" role="tab" aria-controls="dropping" aria-selected="false">Dropping Form</button>
+            </li>
+            <li class="nav-item" role="presentation">
+
+
+              <!-- Continuing from where the code was cut off -->
+              <button class="nav-link" id="changing-tab" data-bs-toggle="tab" data-bs-target="#changing" type="button" role="tab" aria-controls="changing" aria-selected="false">Changing Form</button>
+            </li>
+          </ul>
+          
+          <!-- Tab content -->
+          <div class="tab-content" id="formTabsContent">
+            <!-- Adding Form Tab -->
+            <div class="tab-pane fade show active form-tab-content" id="adding" role="tabpanel" aria-labelledby="adding-tab">
+              <div class="form-item">
+                <div class="form-icon">
+                  <i class="fas fa-plus-circle"></i>
+                </div>
+                <div class="form-details">
+                  <h6>Subject Adding Form</h6>
+                  <p>Use this form to add subjects after the regular enrollment period</p>
+                </div>
+                <button class="form-download">
+                  <i class="fas fa-download me-1"></i> Download
+                </button>
+              </div>
+            </div>
+            
+            <!-- Completion Form Tab -->
+            <div class="tab-pane fade form-tab-content" id="completion" role="tabpanel" aria-labelledby="completion-tab">
+              <div class="form-item">
+                <div class="form-icon">
+                  <i class="fas fa-tasks"></i>
+                </div>
+                <div class="form-details">
+                  <h6>Completion Form</h6>
+                  <p>For completing requirements and coursework with pending status</p>
+                </div>
+                <button class="form-download">
+                  <i class="fas fa-download me-1"></i> Download
+                </button>
+              </div>
+            </div>
+            
+            <!-- Dropping Form Tab -->
+            <div class="tab-pane fade form-tab-content" id="dropping" role="tabpanel" aria-labelledby="dropping-tab">
+              <div class="form-item">
+                <div class="form-icon">
+                  <i class="fas fa-minus-circle"></i>
+                </div>
+                <div class="form-details">
+                  <h6>Subject Dropping Form</h6>
+                  <p>Use this form to officially drop a course within the allowed period</p>
+                </div>
+                <button class="form-download">
+                  <i class="fas fa-download me-1"></i> Download
+                </button>
+              </div>
+            </div>
+            
+            <!-- Changing Form Tab -->
+            <div class="tab-pane fade form-tab-content" id="changing" role="tabpanel" aria-labelledby="changing-tab">
+              <div class="form-item">
+                <div class="form-icon">
+                  <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="form-details">
+                  <h6>Subject Change Form</h6>
+                  <p>For requesting to change subjects or class schedules</p>
+                </div>
+                <button class="form-download">
+                  <i class="fas fa-download me-1"></i> Download
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Submit Request</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- Schedule Viewer Modal -->
+<div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="scheduleModalLabel"><i class="fas fa-calendar-alt me-2"></i> Weekly Class Schedule</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Toggle Buttons -->
+        <div class="text-center mb-4">
+          <button class="btn btn-outline-success me-2" onclick="toggleSchedule('lecture')">Lecture View</button>
+          <button class="btn btn-outline-info" onclick="toggleSchedule('lab')">Lab View</button>
+        </div>
+
+        <!-- Lecture Table -->
+        <div id="lecture-schedule">
+          <h6 class="text-success mb-3">Lecture Schedule</h6>
+          <table class="table table-bordered text-center">
+            <thead class="table-light">
+              <tr>
+                <th>Time</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>01:30 - 03:00 PM</td>
+                <td>IT6 - RM 16</td>
+                <td></td>
+                <td></td>
+                <td>IT6 - RM 16</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>11:30 - 01:30 PM</td>
+                <td></td>
+                <td></td>
+                <td>GE-ES - MTC 1</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>07:30 - 09:00 AM</td>
+                <td></td>
+                <td>GE-PS - CS PHY</td>
+                <td></td>
+                <td></td>
+                <td>GE-MMW</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Lab Table -->
+        <div id="lab-schedule" style="display:none;">
+          <h6 class="text-info mb-3">Laboratory Schedule</h6>
+          <table class="table table-bordered text-center">
+            <thead class="table-light">
+              <tr>
+                <th>Time</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>07:30 - 11:00 AM</td>
+                <td>IT5 - CS PHY</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>03:00 - 04:30 PM</td>
+                <td>IT6 - Lab</td>
+                <td></td>
+                <td></td>
+                <td>IT6 - Lab</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>03:00 - 05:00 PM</td>
+                <td></td>
+                <td></td>
+                <td>IT7 - Room 3</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Curriculum Modal -->
+<div class="modal fade curriculum-modal" id="curriculumModal" tabindex="-1" aria-labelledby="curriculumModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="curriculumModalLabel">BSIT Curriculum - Student: Ian Jan Julito F. Aborot (2020-8-0452)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0">
+        <ul class="nav nav-pills mb-3 p-3" id="curriculumTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="year1-tab" data-bs-toggle="pill" data-bs-target="#year1" type="button" role="tab" aria-controls="year1" aria-selected="true">First Year</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="year2-tab" data-bs-toggle="pill" data-bs-target="#year2" type="button" role="tab" aria-controls="year2" aria-selected="false">Second Year</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="year3-tab" data-bs-toggle="pill" data-bs-target="#year3" type="button" role="tab" aria-controls="year3" aria-selected="false">Third Year</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="year4-tab" data-bs-toggle="pill" data-bs-target="#year4" type="button" role="tab" aria-controls="year4" aria-selected="false">Fourth Year</button>
+          </li>
+        </ul>
+        
+        <div class="tab-content" id="curriculumTabsContent">
+          <!-- First Year Tab -->
+          <div class="tab-pane fade show active curriculum-tab-content" id="year1" role="tabpanel" aria-labelledby="year1-tab">
+            <h5 class="year-header">FIRST YEAR</h5>
+            
+            <!-- First Semester -->
+            <h6 class="semester-header">FIRST SEMESTER</h6>
+            <table class="prospectus-table">
+              <thead>
+                <tr>
+                  <th>Grade</th>
+                  <th>Course Code</th>
+                  <th>Course Title</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="subject-completed">
+                  
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>GE-UTS</td>
+                  <td>Understanding the Self</td>
+                  <td>3</td>
+                  <td></td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">1.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>GE-CW</td>
+                  <td>The Contemporary World</td>
+                  <td>3</td>
+                  <td></td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">1.25</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>GE-PC</td>
+                  <td>Purposive Communication</td>
+                  <td>3</td>
+                  <td></td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">2.50</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>CC-1A</td>
+                  <td>Introduction to Computing</td>
+                  <td>2/1</td>
+                  <td></td>
+                </tr>
+                <tr class="subject-completed">
+                 <td class="grade-cell">
+  <span class="grade-text">2.75</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td></td>
+                  <td>Computer Programming 1</td>
+                  <td>2/1</td>
+                  <td></td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">1.50</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>GE-STS</td>
+                  <td>Science, Technology and Society</td>
+                  <td>3</td>
+                  <td></td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">1.25</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>PATH-FIT1</td>
+                  <td>Movement Enhancement</td>
+                  <td>2</td>
+                  <td></td>
+                </tr>
+                <tr class="subject-completed">
+                 <td class="grade-cell">
+  <span class="grade-text">1.75</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>NSTP-1</td>
+                  <td>ROTC/CWTS</td>
+                  <td>3</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="semester-summary">
+              <div>Total Units: 23</div>
+              <div>Average: 1.84 (Good)</div>
+            </div>
+            
+            <!-- Second Semester -->
+            <h6 class="semester-header">SECOND SEMESTER</h6>
+            <table class="prospectus-table">
+              <thead>
+                <tr>
+                  <th>Grade</th>
+                  <th>Course Code</th>
+                  <th>Course Title</th>
+                  <th>Units</th>
+                  <th>Pre-requisite</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>GE-AA</td>
+                  <td>Art Appreciation</td>
+                  <td>3</td>
+                  <td></td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">1.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+                  <td>GE-ES</td>
+                  <td>Environmental Science</td>
+                  <td>3</td>
+                  <td></td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">1.75</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+                  <td>GE-MMW</td>
+                  <td>Mathematics in the Modern World</td>
+                  <td>3</td>
+                  <td></td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell grade-medium">2.50</td>
+                  <td>IT 1</td>
+                  <td>Discrete Mathematics</td>
+                  <td>3</td>
+                  <td></td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">1.25</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+                  <td>IT 2</td>
+                  <td>Introduction to Human Computer Interaction</td>
+                  <td>2/1</td>
+                  <td>CC-2A</td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+                  <td>CC-2A</td>
+                  <td>Computer Programming 2</td>
+                  <td>2/1</td>
+                  <td>CC-2A</td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">2.25</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+                  <td>PATH-FIT2</td>
+                  <td>Fitness Exercises</td>
+                  <td>2</td>
+                  <td>PATH-FIT1</td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">2.50</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+                  <td>NSTP-2</td>
+                  <td>ROTC/CWTS</td>
+                  <td>3</td>
+                  <td>NSTP-1</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="semester-summary">
+              <div>Total Units: 23</div>
+              <div>Average: 2.07 (Good)</div>
+            </div>
+          </div>
+          
+          <!-- Second Year Tab -->
+          <div class="tab-pane fade curriculum-tab-content" id="year2" role="tabpanel" aria-labelledby="year2-tab">
+            <h5 class="year-header">SECOND YEAR</h5>
+            
+            <!-- First Semester -->
+            <h6 class="semester-header">FIRST SEMESTER</h6>
+            <table class="prospectus-table">
+              <thead>
+                <tr>
+                  <th>Grade</th>
+                  <th>Course Code</th>
+                  <th>Course Title</th>
+                  <th>Units</th>
+                  <th>Pre-requisite</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">1.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>GE-PH</td>
+                  <td>Readings in Philippine History</td>
+                  <td>3</td>
+                  <td></td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">1.25</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>GE-Elec1-EM</td>
+                  <td>The Entrepreneurial Mind</td>
+                  <td>3</td>
+                  <td></td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">1.75</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 3A</td>
+                  <td>Graphics and Visual Computing</td>
+                  <td>2/1</td>
+                  <td>GE-MMW</td>
+                </tr>
+                <tr class="subject-completed">
+                  <td class="grade-cell">
+  <span class="grade-text">2.50</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>CC-4A</td>
+                  <td>Data Structures and Algorithms</td>
+                  <td>2/1</td>
+                  <td>CC-2A</td>
+                </tr>
+                <tr class="subject-ongoing">
+                  <td class="grade-cell">
+  <span class="grade-text">2.75</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT E1/L</td>
+                  <td>IT Elective 1</td>
+                  <td>2/1</td>
+                  <td>CC-2A</td>
+                </tr>
+                <tr class="subject-ongoing">
+                 <td class="grade-cell">
+  <span class="grade-text">3.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT E2/L</td>
+                  <td>IT Elective 2</td>
+                  <td>2/1</td>
+                  <td>2nd year standing</td>
+                </tr>
+                <tr class="subject-ongoing">
+                  <td class="grade-cell">
+  <span class="grade-text">2.25</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>PATH-FIT3</td>
+                  <td>Dance and Sports</td>
+                  <td>2</td>
+                  <td>PATH-FIT1</td>
+                </tr>
+                <tr class="subject-ongoing">
+                 <td class="grade-cell">
+  <span class="grade-text">2.50</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>GE-PS</td>
+                  <td>Panitikan Studies</td>
+                  <td>3</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="semester-summary">
+              <div>Total Units: 23</div>
+              <div>Status: In Progress</div>
+            </div>
+            
+            <!-- Second Semester -->
+            <h6 class="semester-header">SECOND SEMESTER</h6>
+            <table class="prospectus-table">
+              <thead>
+                <tr>
+                  <th>Grade</th>
+                  <th>Course Code</th>
+                  <th>Course Title</th>
+                  <th>Units</th>
+                  <th>Pre-requisite</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>GE-Elect2-MDS</td>
+                  <td>Mathematics for Data Science</td>
+                  <td>3</td>
+                  <td>GE-MMW</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">2.25</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 4</td>
+                  <td>Fundamentals of Electronics</td>
+                  <td>1/2</td>
+                  <td>GE-MMW</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">1.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>CC-5/L</td>
+                  <td>Information Management 1</td>
+                  <td>2/1</td>
+                  <td>CC-4A, IT 3A</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">1.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 5/L</td>
+                  <td>Quantitative Methods and Modelling and Simulation</td>
+                  <td>2/1</td>
+                  <td>IT 1, GE-MMW</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 5/L</td>
+                  <td>Network Technologies 1</td>
+                  <td>2/1</td>
+                  <td>IT E2/L</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 6/L</td>
+                  <td>Integrative Programming and Technologies 1</td>
+                  <td>2/1</td>
+                  <td>IT E1/L, IT E2/L</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 7/L</td>
+                  <td>Systems Integration and Architecture 1</td>
+                  <td>2/1</td>
+                  <td>CC-4A, IT E1/L</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>PATH-FIT4</td>
+                  <td>Recreation</td>
+                  <td>2</td>
+                  <td>PATH-FIT3</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="semester-summary">
+              <div>Total Units: 23</div>
+              <div>Status: Upcoming</div>
+            </div>
+          </div>
+          
+          <!-- Third Year Tab -->
+          <div class="tab-pane fade curriculum-tab-content" id="year3" role="tabpanel" aria-labelledby="year3-tab">
+            <h5  class="year-header">THIRD YEAR</h5>
+            
+            <!-- First Semester -->
+            <h6 class="semester-header">FIRST SEMESTER</h6>
+            <table class="prospectus-table">
+              <thead>
+                <tr>
+                  <th>Grade</th>
+                  <th>Course Code</th>
+                  <th>Course Title</th>
+                  <th>Units</th>
+                  <th>Pre-requisite</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">  </span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 8/L</td>
+                  <td>Advanced Database Systems</td>
+                  <td>2/1</td>
+                  <td>CC-5/L</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">  </span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 9/L</td>
+                  <td>Network Technologies 2</td>
+                  <td>2/1</td>
+                  <td>IT 5/L</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 10/L</td>
+                  <td>Information Assurance and Security 1</td>
+                  <td>2/1</td>
+                  <td>IT 7/L</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 11/L</td>
+                  <td>Web Systems and Technologies 1</td>
+                  <td>2/1</td>
+                  <td>IT 6/L</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 12/L</td>
+                  <td>Multimedia Systems</td>
+                  <td>2/1</td>
+                  <td>CC-1/L</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">  </span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>GE-ET</td>
+                  <td>Ethics</td>
+                  <td>3</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT E3/L</td>
+                  <td>IT Elective 3</td>
+                  <td>2/1</td>
+                  <td>3rd year standing</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="semester-summary">
+              <div>Total Units: 21</div>
+              <div>Status: Upcoming</div>
+            </div>
+            
+            <!-- Second Semester -->
+            <h6 class="semester-header">SECOND SEMESTER</h6>
+            <table class="prospectus-table">
+              <thead>
+                <tr>
+                  <th>Grade</th>
+                  <th>Course Code</th>
+                  <th>Course Title</th>
+                  <th>Units</th>
+                  <th>Pre-requisite</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">  </span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 13</td>
+                  <td>Social and Professional Issues</td>
+                  <td>3</td>
+                  <td>3rd yr standing</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">  </span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>CC-6/L</td>
+                  <td>Application Development and Emerging Technologies 1</td>
+                  <td>2/1</td>
+                  <td>IT 8/L</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 14/L</td>
+                  <td>Geographic Information System</td>
+                  <td>2/1</td>
+                  <td>IT 5/L</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">  </span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 15/L</td>
+                  <td>Embedded System</td>
+                  <td>2/1</td>
+                  <td>IT 7/L</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 16/L</td>
+                  <td>Information Assurance and Security 2</td>
+                  <td>2/1</td>
+                  <td>IT 10/L</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">2.00</span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 17</td>
+                  <td>Capstone Project and Research 1 (Proposal Writing)</td>
+                  <td>2</td>
+                  <td>IT 8/L, IT 10/L</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">  </span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>GE-LWR</td>
+                  <td>Life and Works of Rizal</td>
+                  <td>3</td>
+                  <td>GE-PH</td>
+                </tr>
+                <tr>
+                 <td class="grade-cell">
+  <span class="grade-text">  </span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>GE-IER</td>
+                  <td>Intensive English Review</td>
+                  <td>3</td>
+                  <td>3rd yr standing</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="semester-summary">
+              <div>Total Units: 23</div>
+              <div>Status: Upcoming</div>
+            </div>
+          </div>
+          
+          <!-- Fourth Year Tab -->
+          <div class="tab-pane fade curriculum-tab-content" id="year4" role="tabpanel" aria-labelledby="year4-tab">
+            <h5 class="year-header">FOURTH YEAR</h5>
+            
+            <!-- First Semester -->
+            <h6 class="semester-header">FIRST SEMESTER</h6>
+            <table class="prospectus-table">
+              <thead>
+                <tr>
+                  <th>Grade</th>
+                  <th>Course Code</th>
+                  <th>Course Title</th>
+                  <th>Units</th>
+                  <th>Pre-requisite</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">  </span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 18/L</td>
+                  <td>Systems Administration and Maintenance</td>
+                  <td>2/1</td>
+                  <td>IT 16/L</td>
+                </tr>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">  </span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 19</td>
+                  <td>Capstone Project and Research 2 (Data Gathering and Writing)</td>
+                  <td>2</td>
+                  <td>IT 17</td>
+                </tr>
+                <tr>
+                 <td class="grade-cell">
+  <span class="grade-text">  </span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT E4/L</td>
+                  <td>IT Elective 4</td>
+                  <td>2/1</td>
+                  <td>4th year standing</td>
+                </tr>
+                <tr>
+                 <td class="grade-cell">
+  <span class="grade-text">  </span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 20</td>
+                  <td>Educational Tour in IT Industry</td>
+                  <td>3</td>
+                  <td>4th year standing</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="semester-summary">
+              <div>Total Units: 11</div>
+              <div>Status: Upcoming</div>
+            </div>
+            
+            <!-- Second Semester -->
+            <h6 class="semester-header">SECOND SEMESTER</h6>
+            <table class="prospectus-table">
+              <thead>
+                <tr>
+                  <th>Grade</th>
+                  <th>Course Code</th>
+                  <th>Course Title</th>
+                  <th>Units</th>
+                  <th>Pre-requisite</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="grade-cell">
+  <span class="grade-text">  </span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 21</td>
+                  <td>Thesis Writing and Colloquium</td>
+                  <td>2</td>
+                  <td>IT 19</td>
+                </tr>
+                <tr>
+                 <td class="grade-cell">
+  <span class="grade-text">  </span>
+  <input type="text" class="form-control form-control-sm grade-input d-none" value="2.00" style="width: 60px; display: inline-block;">
+  <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit(this)">✏️</button>
+</td>
+
+                  <td>IT 22</td>
+                  <td>Practicum (486 hours)</td>
+                  <td>6</td>
+                  <td>70% total major courses completed</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="semester-summary">
+              <div>Total Units: 8</div>
+              <div>Status: Upcoming</div>
+            </div>
+            
+            <div class="text-center mt-4">
+              <h5>Total Units: 155</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="window.print()">Print Curriculum</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Academic Progress Modal -->
+<div class="modal fade" id="progressModal" tabindex="-1" aria-labelledby="progressModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="progressModalLabel"><i class="fas fa-book me-2"></i> Academic Progress Overview</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- 🟦 Progress Bars -->
+        <h6 class="mb-3">Overall Progress</h6>
+        <div class="progress mb-3">
+          <div class="progress-bar" role="progressbar" style="width: 68%;">68%</div>
+        </div>
+        <div class="d-flex justify-content-between mb-4">
+          <div>
+            <p class="mb-1 small">Major Subjects</p>
+            <div class="progress" style="width: 150px">
+              <div class="progress-bar" style="width: 75%;">75%</div>
+            </div>
+          </div>
+          <div>
+            <p class="mb-1 small">Minor Subjects</p>
+            <div class="progress" style="width: 150px">
+              <div class="progress-bar" style="width: 60%;">60%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 🧮 GPA & Units -->
+        <div class="row text-center mb-4">
+          <div class="col-md-6">
+            <h3>3.5</h3>
+            <p class="small mb-0">Current GPA</p>
+          </div>
+          <div class="col-md-6">
+            <h3>89</h3>
+            <p class="small mb-0">Units Completed</p>
+          </div>
+        </div>
+
+        <!-- 📘 Curriculum Progress Preview -->
+        <h6 class="mb-2">Curriculum Progress</h6>
+        <div class="row g-2 mb-4">
+          <div class="col-md-3">
+            <div class="year-tab active">1st Year <span class="float-end"><i class="fas fa-check-circle text-success"></i></span></div>
+          </div>
+          <div class="col-md-3">
+            <div class="year-tab">2nd Year <span class="float-end"><i class="fas fa-spinner text-primary"></i></span></div>
+          </div>
+          <div class="col-md-3">
+            <div class="year-tab">3rd Year <span class="float-end"><i class="far fa-circle text-secondary"></i></span></div>
+          </div>
+          <div class="col-md-3">
+            <div class="year-tab">4th Year <span class="float-end"><i class="far fa-circle text-secondary"></i></span></div>
+          </div>
+        </div>
+
+        <!-- 🔎 Subject Risk Summary -->
+        <h6 class="mt-4">📊 Subject Risk Indicator</h6>
+        <div class="row text-center mb-4">
+          <div class="col-md-4">
+            <div class="alert alert-success">
+              <h6>✅ Passed Subjects</h6>
+              <strong>47</strong>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="alert alert-warning">
+              <h6>📌 Ongoing Subjects</h6>
+              <strong>8</strong>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="alert alert-danger">
+              <h6>⚠️ At Risk</h6>
+              <strong>3</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- 🚨 Subject Risk Table -->
+        <h6 class="mb-2">📋 Subjects with Grades 3.00 / INC</h6>
+        <table class="table table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th>Course Code</th>
+              <th>Course Title</th>
+              <th>Grade</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>IT 2</td>
+              <td>Human Computer Interaction</td>
+              <td>INC</td>
+              <td><span class="badge bg-danger">Incomplete</span></td>
+            </tr>
+            <tr>
+              <td>CC-2A</td>
+              <td>Computer Programming 2</td>
+              <td>3.00</td>
+              <td><span class="badge bg-warning text-dark">Passing</span></td>
+            </tr>
+            <tr>
+              <td>GE-MMW</td>
+              <td>Mathematics in the Modern World</td>
+              <td>3.00</td>
+              <td><span class="badge bg-warning text-dark">Passing</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="text-end mt-4">
+          <button class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- Grades Modal -->
+<div class="modal fade" id="gradesModal" tabindex="-1" aria-labelledby="gradesModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title"><i class="fas fa-chart-line me-2"></i> Final Grades by Semester</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="gradesModalBody">
+        <!-- Dynamic content will be inserted here -->
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <!-- Bootstrap and Additional Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Current Date Display
+    const today = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('currentDate').textContent = today.toLocaleDateString('en-US', options);
+    
+    // Add any additional scripts here
+    
+  </script>
+  <script>
+  function openScheduleModal() {
+    const modal = new bootstrap.Modal(document.getElementById('scheduleModal'));
+    modal.show();
+  }
+
+
+  function openScheduleModal() {
+    const modal = new bootstrap.Modal(document.getElementById('scheduleModal'));
+    modal.show();
+  }
+
+  function toggleSchedule(view) {
+    const lecture = document.getElementById('lecture-schedule');
+    const lab = document.getElementById('lab-schedule');
+
+    if (view === 'lecture') {
+      lecture.style.display = 'block';
+      lab.style.display = 'none';
+    } else {
+      lecture.style.display = 'none';
+      lab.style.display = 'block';
+    }
+  }
+
+ function openProgressModal() {
+    const modal = new bootstrap.Modal(document.getElementById('progressModal'));
+    modal.show();
+  } 
+
+function openGradesModal() {
+  const modal = new bootstrap.Modal(document.getElementById('gradesModal'));
+  modal.show();
+}
+
+function toggleEdit(btn) {
+  const td = btn.closest('td');
+  const span = td.querySelector('.grade-text');
+  const input = td.querySelector('.grade-input');
+
+  if (input.classList.contains('d-none')) {
+    // Show input, hide span
+    span.classList.add('d-none');
+    input.classList.remove('d-none');
+    btn.innerText = '💾'; // mock save
+  } else {
+    // Hide input, update span text
+    span.innerText = input.value;
+    span.classList.remove('d-none');
+    input.classList.add('d-none');
+    btn.innerText = '✏️';
+  }
+}
+
+function openGradesModal() {
+  const curriculum = {
+    "1st Year - 1st Semester": [
+      { code: "GE-UTS", title: "Understanding the Self", grade: "2.00" },
+      { code: "GE-CW", title: "The Contemporary World", grade: "2.00" },
+      { code: "GE-PC", title: "Purposive Communication", grade: "2.50" },
+      { code: "CC-1A", title: "Introduction to Computing", grade: "1.75" },
+      { code: "", title: "Computer Programming 1", grade: "2.00" },
+      { code: "GE-STS", title: "Science, Technology and Society", grade: "1.50" },
+      { code: "PATH-FIT1", title: "Movement Enhancement", grade: "1.25" },
+      { code: "NSTP-1", title: "ROTC/CWTS", grade: "1.75" },
+    ],
+    "1st Year - 2nd Semester": [
+      { code: "GE-AA", title: "Art Appreciation", grade: "1.50" },
+      { code: "GE-ES", title: "Environmental Science", grade: "2.50" },
+      { code: "GE-MMW", title: "Mathematics in the Modern World", grade: "2.25" },
+      { code: "IT 1", title: "Discrete Mathematics", grade: "2.50" },
+      { code: "IT 2", title: "Introduction to Human Computer Interaction", grade: "INC" },
+      { code: "CC-2A", title: "Computer Programming 2", grade: "3.00" },
+      { code: "PATH-FIT2", title: "Fitness Exercises", grade: "1.00" },
+      { code: "NSTP-2", title: "ROTC/CWTS", grade: "1.75" },
+    ],
+    "2nd Year - 1st Semester": [
+      { code: "GE-PH", title: "Readings in Philippine History", grade: "2.00" },
+      { code: "GE-Elec1-EM", title: "The Entrepreneurial Mind", grade: "2.25" },
+      { code: "IT 3A", title: "Graphics and Visual Computing", grade: "2.50" },
+      { code: "CC-4A", title: "Data Structures and Algorithms", grade: "2.25" },
+      { code: "IT E1/L", title: "IT Elective 1", grade: "2.25" },
+
+
+
+    ]
+    // You can continue adding more based on the full curriculum
+  };
+
+  let content = "";
+  for (const [semester, subjects] of Object.entries(curriculum)) {
+    const validSubjects = subjects.filter(sub => sub.grade !== "--" && sub.grade !== "");
+    if (validSubjects.length === 0) continue;
+
+    content += `<h6 class="text-primary mt-3"><i class="fas fa-book me-1 text-success"></i> ${semester}</h6>`;
+    content += `
+      <table class="table table-bordered table-sm">
+        <thead class="table-light">
+          <tr>
+            <th>Course Code</th>
+            <th>Course Title</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+    validSubjects.forEach(sub => {
+      content += `
+        <tr>
+          <td>${sub.code || '-'}</td>
+          <td>${sub.title}</td>
+          <td>${sub.grade}</td>
+        </tr>`;
+    });
+
+    content += `</tbody></table>`;
+  }
+
+  document.getElementById("gradesModalBody").innerHTML = content;
+  new bootstrap.Modal(document.getElementById("gradesModal")).show();
+}
+
+
+</script>
+
+
+
+
+
+
+
+</body>
+</html>
