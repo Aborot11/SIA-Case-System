@@ -44,14 +44,28 @@
     .form-label {
       font-weight: 600;
     }
+    
+    /* Added styles for logo size control */
+    .logo-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .logo-image {
+      width: 120px; /* Reduced logo size */
+      height: auto;
+    }
   </style>
 </head>
 <body>
   <div class="login-container">
     <div class="login-form">
       <div class="text-center mb-4">
-        <img src="https://via.placeholder.com/100x100?text=PSU" alt="PSU Logo" class="mb-2"/>
-        <h4 class="text-primary">Palawan State University</h4>
+        <div class="logo-container">
+          <img src="images-removebg-preview.png" alt="PSU Logo" class="logo-image mb-2"/>
+        </div>
+      
         <h6>College of Sciences Student Portal</h6>
         <p class="text-muted">Sign in to access your academic portal</p>
       </div>
@@ -144,4 +158,4 @@
     });
   </script>
 </body>
-</html> 
+</html>

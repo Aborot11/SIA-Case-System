@@ -833,7 +833,8 @@
         <li><a href="#" onclick="openProgressModal()"><i class="fas fa-book"></i> Academic Progress</a></li>
         <li><a href="#" onclick="openScheduleModal()"><i class="fas fa-calendar"></i> Course Schedule</a></li>
         <li><a href="#"><i class="fas fa-user-graduate"></i> Enrollment Status</a></li>
-        <li><a href="#"><i class="fas fa-hand-holding-usd"></i> Financial Aid Info</a></li>
+        <li><a href="#" onclick="openFinancialAidModal()"><i class="fas fa-hand-holding-usd"></i> Financial Aid Info</a></li>
+
         <li><a href="#" onclick="openGradesModal()"><i class="fas fa-file-alt"></i> Grades</a></li>
 
         <li><a href="#" data-bs-toggle="modal" data-bs-target="#formsModal"><i class="fas fa-file-pdf"></i> Form Management</a></li>
@@ -2272,6 +2273,46 @@
 </div>
 
 
+<!-- Financial Aid Info Modal -->
+<div class="modal fade" id="financialAidModal" tabindex="-1" aria-labelledby="financialAidModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="financialAidModalLabel">
+          <i class="fas fa-hand-holding-usd me-2"></i> Financial Aid Information
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4" style="background: linear-gradient(135deg, #e8f5e9, #f1f8e9);">
+        <div class="mb-3">
+          <h6 class="text-success fw-bold"><i class="fas fa-graduation-cap me-2"></i> Scholarships</h6>
+          <p class="mb-2">You may be eligible for academic or need-based scholarships depending on your GPA and family income.</p>
+        </div>
+
+        <div class="mb-3">
+          <h6 class="text-success fw-bold"><i class="fas fa-gift me-2"></i> Grants & Assistance</h6>
+          <p>Available CHED and University-based financial assistance programs. Requirements may include income certificates and academic standing.</p>
+        </div>
+
+        <div class="mb-3">
+          <h6 class="text-success fw-bold"><i class="fas fa-file-alt me-2"></i> Application Requirements</h6>
+          <ul>
+            <li>Form 137</li>
+            <li>Certificate of Indigency (if applicable)</li>
+            <li>Copy of Latest Grades</li>
+          </ul>
+        </div>
+
+        <div class="text-end">
+          <a href="#" class="btn btn-success"><i class="fas fa-download me-1"></i> Download Application Form</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
   <!-- Bootstrap and Additional Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -2407,6 +2448,10 @@ function openGradesModal() {
   new bootstrap.Modal(document.getElementById("gradesModal")).show();
 }
 
+function openFinancialAidModal() {
+    var modal = new bootstrap.Modal(document.getElementById('financialAidModal'));
+    modal.show();
+  }
 
 </script>
 
