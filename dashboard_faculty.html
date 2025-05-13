@@ -269,6 +269,14 @@
       background-color: #004080;
       border-color: #004080;
     }
+
+.bg-primary {
+  background: linear-gradient(135deg, #0db932, #0d2339) !important;
+  color: white !important;
+}
+
+
+
   </style>
 </head>
 <body>
@@ -288,7 +296,13 @@
         <li><a href="#"><i class="fas fa-chart-line"></i> Student Performance</a></li>
         <li><a href="#"><i class="fas fa-users"></i> Student List</a></li>
         <li><a href="#"><i class="fas fa-calendar-alt"></i> Class Schedule</a></li>
-        <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
+        <li>
+  <a href="#" data-bs-toggle="modal" data-bs-target="#notificationModal">
+    <i class="fas fa-bell"></i> Message & Notifications
+  </a>
+</li>
+
+
         <li><a href="settingsf.html"><i class="fas fa-cog"></i> Settings</a></li>
       </ul>
       <div class="text-center">
@@ -626,6 +640,81 @@
       </div>
     </div>
   </div>
+
+<!-- Notifications Modal -->
+<div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="messagesModalLabel"><i class="fas fa-envelope"></i> Messages & Notifications</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-3" id="messageTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="inbox-tab" data-bs-toggle="tab" data-bs-target="#inbox" type="button">Inbox</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="compose-tab" data-bs-toggle="tab" data-bs-target="#compose" type="button">Compose</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="notifications-tab" data-bs-toggle="tab" data-bs-target="#notifications" type="button">School Notices</button>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <!-- Inbox -->
+          <div class="tab-pane fade show active" id="inbox" role="tabpanel">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <strong>Maria Santos:</strong> Pwede maki-copy ng class notes?
+                <br><small class="text-muted">May 12, 2025</small>
+              </li>
+              <li class="list-group-item">
+                <strong>John Cruz:</strong> Group meeting sa Friday ha!
+                <br><small class="text-muted">May 10, 2025</small>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Compose -->
+          <div class="tab-pane fade" id="compose" role="tabpanel">
+            <form>
+              <div class="mb-3">
+                <label for="recipient" class="form-label">To:</label>
+                <input type="text" class="form-control" id="recipient" placeholder="Enter student name">
+              </div>
+              <div class="mb-3">
+                <label for="messageContent" class="form-label">Message:</label>
+                <textarea class="form-control" id="messageContent" rows="4" placeholder="Type your message here..."></textarea>
+              </div>
+              <button type="button" class="btn btn-success">Send (Mock)</button>
+            </form>
+          </div>
+
+          <!-- Notifications -->
+          <div class="tab-pane fade" id="notifications" role="tabpanel">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <strong>Registrar:</strong> Reminder: Enrollment deadline is May 30.
+              </li>
+              <li class="list-group-item">
+                <strong>College of Sciences:</strong> General Assembly on May 20, 9:00 AM at CS Hall.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 <script>
   document.querySelectorAll('.sidebar-menu a').forEach(link => {
     if (link.textContent.includes("Class Management")) {
@@ -675,6 +764,10 @@
       e.target.closest("li").remove();
     }
   });
+
+  function openNotificationModal() {
+    $('#notificationModal').modal('show');
+  }
 </script>
 
 
