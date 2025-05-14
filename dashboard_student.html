@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PSU Student Portal - Dashboard</title>
@@ -817,7 +821,49 @@
 }
 
 
-  </style>
+  
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column !important;
+  }
+  .sidebar {
+    width: 100% !important;
+    position: relative !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid #ddd !important;
+    z-index: 999 !important;
+  }
+  .content-area {
+    padding: 15px !important;
+  }
+  .sidebar-menu a {
+    padding: 10px 15px !important;
+  }
+  .dashboard-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 15px !important;
+  }
+  .dashboard-header .date-time {
+    margin-top: 10px !important;
+  }
+  .form-item {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+  .form-icon {
+    margin-bottom: 5px !important;
+  }
+  .form-download {
+    width: 100% !important;
+  }
+  .modal-dialog {
+    margin: 1rem auto !important;
+  }
+}
+
+</style>
 </head>
 <body>
   <div class="main-container">
