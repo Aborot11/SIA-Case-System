@@ -418,7 +418,49 @@
     .toggle-container:hover {
       background-color: #f0f0f0;
     }
-  </style>
+  
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column !important;
+  }
+  .sidebar {
+    width: 100% !important;
+    position: relative !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid #ddd !important;
+    z-index: 999 !important;
+  }
+  .content-area {
+    padding: 15px !important;
+  }
+  .sidebar-menu a {
+    padding: 10px 15px !important;
+  }
+  .dashboard-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 15px !important;
+  }
+  .dashboard-header .date-time {
+    margin-top: 10px !important;
+  }
+  .form-item {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+  .form-icon {
+    margin-bottom: 5px !important;
+  }
+  .form-download {
+    width: 100% !important;
+  }
+  .modal-dialog {
+    margin: 1rem auto !important;
+  }
+}
+
+</style>
 </head>
 <!-- PART 1 ENDS HERE -->
 <!-- PART 2 STARTS HERE -->
